@@ -3,5 +3,6 @@
   :url "http://example.com/FIXME"
   :license {:name "The BSD 2-Clause License"
             :url "http://opensource.org/licenses/BSD-2-Clause"}
-  :dependencies [[org.clojure/clojure "1.4.0"]]
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [seesaw "1.4.2"]]
   :main transcend.main)

@@ -1,7 +1,11 @@
 (ns transcend.main
-  (:gen-class))
+  (:use seesaw.core))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (invoke-later
+    (-> (frame :title "Transcend"
+          :content ""
+          :on-close :exit)
+      pack!
+      show!)))
