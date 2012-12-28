@@ -1,4 +1,4 @@
-(ns transcend.core
+(ns transcend.main
   (:gen-class))
 
 (defn -main

@@ -4,4 +4,4 @@
   :license {:name "The BSD 2-Clause License"
             :url "http://opensource.org/licenses/BSD-2-Clause"}
   :dependencies [[org.clojure/clojure "1.4.0"]]
-  :main transcend.core)
+  :main transcend.main)
