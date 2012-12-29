@@ -7,7 +7,8 @@
   []
   (let [table (javax.swing.JTable. (create-table-model))]
     (doto table
-      (.setDefaultRenderer java.lang.Object (create-table-cell-renderer)))))
+      (.setDefaultRenderer java.lang.Object (create-table-cell-renderer))
+      (.setGridColor java.awt.Color/LIGHT_GRAY))))
 
 (defn- create-table-model
   []
