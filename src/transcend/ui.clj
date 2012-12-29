@@ -15,7 +15,9 @@
     (getValueAt [row column]
       (if (== 0 column) (inc row) (proxy-super getValueAt row column)))
     (getColumnClass [columnIndex]
-      java.lang.Object)))
+      java.lang.Object)
+    (isCellEditable [row column]
+      (not= column 0))))
 
 (defn- create-table-cell-renderer
   []
