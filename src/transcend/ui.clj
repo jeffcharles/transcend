@@ -7,7 +7,7 @@
   []
   (let [table (javax.swing.JTable. (create-table-model))]
     (doto table
-      (.setDefaultRenderer (class Object) (create-table-cell-renderer)))))
+      (.setDefaultRenderer java.lang.Object (create-table-cell-renderer)))))
 
 (defn- create-table-model
   []
@@ -15,7 +15,7 @@
     (getValueAt [row column]
       (if (== 0 column) (inc row) (proxy-super getValueAt row column)))
     (getColumnClass [columnIndex]
-      (class Object))))
+      java.lang.Object)))
 
 (defn- create-table-cell-renderer
   []
