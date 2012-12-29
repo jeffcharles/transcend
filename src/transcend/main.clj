@@ -6,9 +6,7 @@
   [& args]
   (invoke-later
     (-> (frame :title "Transcend"
-          :content (scrollable (table
-                     :model (create-table-model)
-                     :show-grid? true))
+          :content (scrollable (create-table))
           :on-close :exit)
       pack!
       show!)))
