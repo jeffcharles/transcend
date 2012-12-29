@@ -11,6 +11,7 @@
       (.setPreferredWidth 10)
       (.setResizable false))
     (doto table
+      (-> .getTableHeader (.setReorderingAllowed false))
       (.setDefaultRenderer java.lang.Object (create-table-cell-renderer))
       (.setGridColor java.awt.Color/LIGHT_GRAY))))
 
