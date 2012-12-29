@@ -5,9 +5,12 @@
 
 (defn create-table
   []
-  (let [table (javax.swing.JTable. (create-table-model))]
+  (let [table (javax.swing.JTable. (create-table-model))
+        first-col (-> (.getColumnModel table) (.getColumn 0))]
+    (doto first-col
+      (.setPreferredWidth 10)
+      (.setResizable false))
     (doto table
-      (-> .getColumnModel (.getColumn 0) (.setPreferredWidth 10)) 
       (.setDefaultRenderer java.lang.Object (create-table-cell-renderer))
       (.setGridColor java.awt.Color/LIGHT_GRAY))))
 
