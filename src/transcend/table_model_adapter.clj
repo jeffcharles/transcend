@@ -10,7 +10,12 @@
         [columnIndex]
         java.lang.Object)
       (getColumnCount []
-        (get-col-count grid))
+        (inc (get-col-count grid)))
+      (getColumnName
+        [column]
+        (if (== 0 column)
+          ""
+          (proxy-super getColumnName (dec column))))
       (getValueAt
         [row column]
         (if (== 0 column)
