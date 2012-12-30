@@ -3,7 +3,7 @@
        transcend.grid))
 
 (deftest creation
-  (is (= [] @(create-grid))))
+  (is (= [[nil]] @(create-grid))))
 
 (deftest get-from-empty
   (is (nil? (get-grid-value (create-grid) 0 0))))

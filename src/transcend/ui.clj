@@ -1,6 +1,6 @@
-(ns transcend.ui)
+(ns transcend.ui
+  (:use transcend.table-model-adapter))
 
-(declare create-table-model)
 (declare create-table-cell-renderer)
 
 (defn create-table
@@ -14,16 +14,6 @@
       (-> .getTableHeader (.setReorderingAllowed false))
       (.setDefaultRenderer java.lang.Object (create-table-cell-renderer))
       (.setGridColor java.awt.Color/LIGHT_GRAY))))
-
-(defn- create-table-model
-  []
-  (proxy [javax.swing.table.DefaultTableModel] [(java.util.Vector. ["" "A" "B" "C" "D" "E"]) 5]
-    (getValueAt [row column]
-      (if (== 0 column) (inc row) (proxy-super getValueAt row column)))
-    (getColumnClass [columnIndex]
-      java.lang.Object)
-    (isCellEditable [row column]
-      (not= column 0))))
 
 (defn- create-table-cell-renderer
   []

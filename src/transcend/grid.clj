@@ -1,15 +1,15 @@
 (ns transcend.grid)
 
+(declare get-col-count-w-row)
+(declare get-row-count-internal)
 (declare extend-rows)
 (declare extend-cols)
-(declare get-row-count)
 (declare row-exists?)
-(declare get-col-count)
 (declare col-exists?)
 
 (defn create-grid
   []
-  (atom []))
+  (atom [[nil]]))
 
 (defn get-grid-value
   [grid x y]
@@ -18,16 +18,35 @@
       (nth (nth grid x) y)
       nil)))
 
+(defn get-row-count
+  [grid]
+  (get-row-count-internal @grid))
+
+(defn get-col-count
+  [grid]
+  (let [grid @grid
+        row-nums (range (get-row-count-internal grid))
+        col-counts (map #(get-col-count-w-row grid %) row-nums)]
+    (apply max col-counts)))
+
 (defn set-grid-value!
   [grid x y value]
   (swap! grid (fn [grid]
     (let [grid (if (row-exists? grid x)
                  grid
-                 (extend-rows grid (- (inc x) (get-row-count grid))))
+                 (extend-rows grid (- (inc x) (get-row-count-internal grid))))
           grid (if (col-exists? grid x y)
                  grid
-                 (extend-cols grid x (- (inc y) (get-col-count grid x))))]
+                 (extend-cols grid x (- (inc y) (get-col-count-w-row grid x))))]
     (assoc grid x (assoc (nth grid x) y value))))))
+
+(defn- get-col-count-w-row
+  [grid x]
+  (if-not (row-exists? grid x) 0 (count (nth grid x))))
+
+(defn- get-row-count-internal
+  [grid]
+  (count grid))
 
 (defn- get-extended-coll
   [coll num-to-add init-val]
@@ -41,18 +60,10 @@
   [grid row num-to-add]
   (assoc grid row (get-extended-coll (nth grid row) num-to-add nil)))
 
-(defn- get-row-count
-  [grid]
-  (count grid))
-
 (defn- row-exists?
   [grid x]
-  (>= (dec (get-row-count grid)) x))
-
-(defn- get-col-count
-  [grid x]
-  (if-not (row-exists? grid x) 0 (count (nth grid x))))
+  (>= (dec (get-row-count-internal grid)) x))
 
 (defn- col-exists?
   [grid x y]
-  (>= (dec (get-col-count grid x)) y))
+  (>= (dec (get-col-count-w-row grid x)) y))
