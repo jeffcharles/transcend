@@ -3,15 +3,14 @@
        transcend.grid))
 
 (deftest creation
-  (is (= [[nil]] @(create-grid))))
+  (is (= [[nil nil nil nil nil]
+          [nil nil nil nil nil]
+          [nil nil nil nil nil]
+          [nil nil nil nil nil]
+          [nil nil nil nil nil]] @(create-grid))))
 
 (deftest get-from-empty
   (is (nil? (get-grid-value (create-grid) 0 0))))
-
-(deftest set-first-val
-  (let [grid (create-grid)]
-    (set-grid-value! grid 0 0 :set)
-    (is (= [[:set]] @grid))))
 
 (defn- get-from-set
   [x y]

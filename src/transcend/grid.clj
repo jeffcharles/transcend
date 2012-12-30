@@ -9,7 +9,7 @@
 
 (defn create-grid
   []
-  (atom [[nil]]))
+  (atom (vec (take 5 (repeat (vec (take 5 (repeat nil))))))))
 
 (defn get-grid-value
   [grid x y]
