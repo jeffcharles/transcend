@@ -5,12 +5,12 @@
   (let [grid (create-grid)]
     (proxy [javax.swing.table.AbstractTableModel] []
       (getRowCount []
-        (get-row-count grid))
+        java.lang.Short/MAX_VALUE)
       (getColumnClass
         [columnIndex]
         java.lang.Object)
       (getColumnCount []
-        (inc (get-col-count grid)))
+        java.lang.Short/MAX_VALUE)
       (getColumnName
         [column]
         (if (== 0 column)
