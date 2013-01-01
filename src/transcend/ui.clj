@@ -3,12 +3,16 @@
 
 (declare create-table-cell-renderer)
 
+(def ^:private first-col-width 50)
+
 (defn create-table
   []
   (let [table (javax.swing.JTable. (create-table-model))
         first-col (-> (.getColumnModel table) (.getColumn 0))]
     (doto first-col
-      (.setPreferredWidth 10)
+      (.setMaxWidth first-col-width)
+      (.setMinWidth first-col-width)
+      (.setPreferredWidth first-col-width)
       (.setResizable false))
     (doto table
       (-> .getTableHeader (.setReorderingAllowed false))
