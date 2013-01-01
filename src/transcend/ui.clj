@@ -16,6 +16,7 @@
       (.setResizable false))
     (doto table
       (-> .getTableHeader (.setReorderingAllowed false))
+      (.setAutoResizeMode javax.swing.JTable/AUTO_RESIZE_OFF)
       (.setDefaultRenderer java.lang.Object (create-table-cell-renderer))
       (.setGridColor java.awt.Color/LIGHT_GRAY))))
 
