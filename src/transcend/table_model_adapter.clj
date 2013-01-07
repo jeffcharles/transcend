@@ -23,4 +23,7 @@
           (get-grid-value grid row (inc column))))
       (isCellEditable
         [row column]
-        (not= column 0)))))
+        (not= column 0))
+      (setValueAt
+        [value row column]
+        (set-grid-value! grid row (inc column) value)))))
