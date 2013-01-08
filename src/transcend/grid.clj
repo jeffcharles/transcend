@@ -12,26 +12,26 @@
   (atom (vec (take 5 (repeat (vec (take 5 (repeat nil))))))))
 
 (defn get-grid-value
-  [grid x y]
+  [grid row col]
   (let [grid @grid]
-    (if (and (row-exists? grid x) (col-exists? grid x y))
-      (nth (nth grid x) y)
+    (if (and (row-exists? grid row) (col-exists? grid row col))
+      (nth (nth grid row) col)
       nil)))
 
 (defn set-grid-value!
-  [grid x y value]
+  [grid row col value]
   (swap! grid (fn [grid]
-    (let [grid (if (row-exists? grid x)
+    (let [grid (if (row-exists? grid row)
                  grid
-                 (extend-rows grid (- (inc x) (get-row-count grid))))
-          grid (if (col-exists? grid x y)
+                 (extend-rows grid (- (inc row) (get-row-count grid))))
+          grid (if (col-exists? grid row col)
                  grid
-                 (extend-cols grid x (- (inc y) (get-col-count grid x))))]
-    (assoc grid x (assoc (nth grid x) y value))))))
+                 (extend-cols grid row (- (inc col) (get-col-count grid row))))]
+    (assoc grid row (assoc (nth grid row) col value))))))
 
 (defn- get-col-count
-  [grid x]
-  (if-not (row-exists? grid x) 0 (count (nth grid x))))
+  [grid row]
+  (if-not (row-exists? grid row) 0 (count (nth grid row))))
 
 (defn- get-row-count
   [grid]
@@ -50,9 +50,9 @@
   (assoc grid row (get-extended-coll (nth grid row) num-to-add nil)))
 
 (defn- row-exists?
-  [grid x]
-  (>= (dec (get-row-count grid)) x))
+  [grid row]
+  (>= (dec (get-row-count grid)) row))
 
 (defn- col-exists?
-  [grid x y]
-  (>= (dec (get-col-count grid x)) y))
+  [grid row col]
+  (>= (dec (get-col-count grid row)) col))
