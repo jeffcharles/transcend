@@ -1,8 +1,8 @@
 (ns transcend.table-model-adapter
-  (:use transcend.grid))
+  (:use transcend.model))
 
 (defn create-table-model []
-  (let [grid (create-grid)]
+  (let [model (create-model)]
     (proxy [javax.swing.table.AbstractTableModel] []
       (getRowCount []
         java.lang.Short/MAX_VALUE)
@@ -20,10 +20,10 @@
         [row column]
         (if (== 0 column)
           (inc row)
-          (get-grid-value grid row (inc column))))
+          (get-displayed-value-at model row (inc column))))
       (isCellEditable
         [row column]
         (not= column 0))
       (setValueAt
         [value row column]
-        (set-grid-value! grid row (inc column) value)))))
+        (set-user-entered-value-at! model row (inc column) value)))))
