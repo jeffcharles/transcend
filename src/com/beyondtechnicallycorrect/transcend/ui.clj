@@ -25,7 +25,12 @@
   []
   (proxy [javax.swing.table.DefaultTableCellRenderer] []
     (getTableCellRendererComponent [table value isSelected hasFocus row col]
-      (let [component (proxy-super getTableCellRendererComponent table value isSelected hasFocus row col)]
+      (let [component
+        (proxy-super getTableCellRendererComponent
+          table value isSelected hasFocus row col)]
         (doto component
-          (.setBackground (if (= 0 col) java.awt.Color/GRAY java.awt.Color/WHITE)))
+          (.setBackground
+            (if (= 0 col)
+              java.awt.Color/GRAY
+              java.awt.Color/WHITE)))
         component))))
