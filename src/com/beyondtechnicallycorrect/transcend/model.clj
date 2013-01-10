@@ -4,7 +4,8 @@
 (declare set-displayed-value-at!)
 (declare is-formula?)
 
-(defn create-model []
+(defn create-model
+  []
   (grid/create-grid))
 
 (defn get-user-entered-value-at

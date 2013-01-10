@@ -1,15 +1,18 @@
 (ns com.beyondtechnicallycorrect.transcend.table-model-adapter
   (:require [com.beyondtechnicallycorrect.transcend.model :as model]))
 
-(defn create-table-model []
+(defn create-table-model
+  []
   (let [model (model/create-model)]
     (proxy [javax.swing.table.AbstractTableModel] []
-      (getRowCount []
+      (getRowCount
+        []
         java.lang.Short/MAX_VALUE)
       (getColumnClass
         [columnIndex]
         java.lang.Object)
-      (getColumnCount []
+      (getColumnCount
+        []
         java.lang.Short/MAX_VALUE)
       (getColumnName
         [column]
