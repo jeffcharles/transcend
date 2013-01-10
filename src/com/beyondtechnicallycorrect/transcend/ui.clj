@@ -1,5 +1,5 @@
-(ns transcend.ui
-  (:use transcend.table-model-adapter))
+(ns com.beyondtechnicallycorrect.transcend.ui
+  (:use com.beyondtechnicallycorrect.transcend.table-model-adapter))
 
 (declare create-table-cell-renderer)
 

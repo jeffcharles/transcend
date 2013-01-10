@@ -1,5 +1,5 @@
-(ns transcend.model
-  (:use transcend.grid))
+(ns com.beyondtechnicallycorrect.transcend.model
+  (:use com.beyondtechnicallycorrect.transcend.grid))
 
 (declare set-displayed-value-at!)
 (declare is-formula?)

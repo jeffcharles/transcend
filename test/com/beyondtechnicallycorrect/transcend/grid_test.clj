@@ -1,6 +1,6 @@
-(ns transcend.grid-test
+(ns com.beyondtechnicallycorrect.transcend.grid-test
   (:use clojure.test
-       transcend.grid))
+        com.beyondtechnicallycorrect.transcend.grid))
 
 (deftest creation
   (is (= [[nil nil nil nil nil]

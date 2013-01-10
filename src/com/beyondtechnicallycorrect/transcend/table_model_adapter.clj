@@ -1,5 +1,5 @@
-(ns transcend.table-model-adapter
-  (:use transcend.model))
+(ns com.beyondtechnicallycorrect.transcend.table-model-adapter
+  (:use com.beyondtechnicallycorrect.transcend.model))
 
 (defn create-table-model []
   (let [model (create-model)]

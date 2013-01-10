@@ -1,4 +1,4 @@
-(ns transcend.grid)
+(ns com.beyondtechnicallycorrect.transcend.grid)
 
 (declare get-col-count)
 (declare get-row-count)

@@ -1,6 +1,6 @@
-(ns transcend.main
+(ns com.beyondtechnicallycorrect.transcend.main
   (:use seesaw.core
-        transcend.ui))
+        com.beyondtechnicallycorrect.transcend.ui))
 
 (defn -main
   [& args]
