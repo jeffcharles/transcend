@@ -1,5 +1,6 @@
 (ns com.beyondtechnicallycorrect.transcend.ui
-  (:use com.beyondtechnicallycorrect.transcend.table-model-adapter))
+  (:require
+    [com.beyondtechnicallycorrect.transcend.table-model-adapter :as adapter]))
 
 (declare create-table-cell-renderer)
 
@@ -7,7 +8,7 @@
 
 (defn create-table
   []
-  (let [table (javax.swing.JTable. (create-table-model))
+  (let [table (javax.swing.JTable. (adapter/create-table-model))
         first-col (-> (.getColumnModel table) (.getColumn 0))]
     (doto first-col
       (.setMaxWidth first-col-width)

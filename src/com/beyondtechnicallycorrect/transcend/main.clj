@@ -1,6 +1,6 @@
 (ns com.beyondtechnicallycorrect.transcend.main
-  (:use seesaw.core
-        com.beyondtechnicallycorrect.transcend.ui))
+  (:require [seesaw.core :refer [invoke-later frame pack! scrollable show!]]
+            [com.beyondtechnicallycorrect.transcend.ui :refer [create-table]]))
 
 (defn -main
   [& args]

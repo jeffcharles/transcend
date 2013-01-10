@@ -1,6 +1,7 @@
 (ns com.beyondtechnicallycorrect.transcend.grid-test
-  (:use clojure.test
-        com.beyondtechnicallycorrect.transcend.grid))
+  (:require [clojure.test :refer [deftest is]]
+            [com.beyondtechnicallycorrect.transcend.grid
+              :refer [create-grid get-grid-value set-grid-value!]]))
 
 (deftest creation
   (is (= [[nil nil nil nil nil]

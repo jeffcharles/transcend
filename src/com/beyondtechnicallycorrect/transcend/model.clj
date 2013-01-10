@@ -1,24 +1,24 @@
 (ns com.beyondtechnicallycorrect.transcend.model
-  (:use com.beyondtechnicallycorrect.transcend.grid))
+  (:require [com.beyondtechnicallycorrect.transcend.grid :as grid]))
 
 (declare set-displayed-value-at!)
 (declare is-formula?)
 
 (defn create-model []
-  (create-grid))
+  (grid/create-grid))
 
 (defn get-user-entered-value-at
   [model row col]
-  (:user-entered (get-grid-value model row col)))
+  (:user-entered (grid/get-grid-value model row col)))
 
 (defn get-displayed-value-at
   [model row col]
-  (:displayed-value (get-grid-value model row col)))
+  (:displayed-value (grid/get-grid-value model row col)))
 
 (defn set-user-entered-value-at!
   [model row col val]
-  (let [cur-val (get-grid-value model row col)]
-    (set-grid-value! model row col (assoc cur-val :user-entered val))
+  (let [cur-val (grid/get-grid-value model row col)]
+    (grid/set-grid-value! model row col (assoc cur-val :user-entered val))
     (set-displayed-value-at! model row col
       (if (is-formula? val)
         (-> (read-string val) eval)
@@ -26,8 +26,8 @@
 
 (defn- set-displayed-value-at!
   [model row col val]
-  (let [cur-val (get-grid-value model row col)]
-    (set-grid-value! model row col (assoc cur-val :displayed-value val))))
+  (let [cur-val (grid/get-grid-value model row col)]
+    (grid/set-grid-value! model row col (assoc cur-val :displayed-value val))))
 
 (defn- is-formula?
   [val]

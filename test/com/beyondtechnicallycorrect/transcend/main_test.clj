@@ -1,3 +1,2 @@
 (ns com.beyondtechnicallycorrect.transcend.main-test
-  (:use clojure.test
-        com.beyondtechnicallycorrect.transcend.main))
+  (:require [clojure.test :refer [deftest is]]))
