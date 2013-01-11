@@ -21,9 +21,12 @@
   (let [cur-val (grid/get-grid-value model row col)]
     (grid/set-grid-value! model row col (assoc cur-val :user-entered val))
     (set-displayed-value-at! model row col
-      (if (is-formula? val)
-        (-> (read-string val) eval)
-        val))))
+      (if-not (is-formula? val)
+        val
+        (try
+          (load-string val)
+          (catch RuntimeException e
+            "#ERROR"))))))
 
 (defn- set-displayed-value-at!
   [model row col val]

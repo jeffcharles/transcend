@@ -21,6 +21,9 @@
 (deftest displayed-formula
   (set-and-get "(+ 1 2)" get-displayed-value-at 3))
 
+(deftest displayed-bad-formula
+  (set-and-get "(+ 1" get-displayed-value-at "#ERROR"))
+
 (defn- set-and-get
   [entered-val getter expected-result]
   (let [model (create-model)]
