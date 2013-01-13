@@ -3,6 +3,7 @@
 
 (declare set-displayed-value-at!)
 (declare is-formula?)
+(declare is-commented-formula?)
 
 (defn create-model
   []
@@ -21,19 +22,27 @@
   (let [cur-val (grid/get-grid-value model row col)]
     (grid/set-grid-value! model row col (assoc cur-val :user-entered val))
     (set-displayed-value-at! model row col
-      (if-not (is-formula? val)
-        val
-        (try
-          (load-string val)
-          (catch RuntimeException e
-            "#ERROR"))))))
+      (cond (is-formula? val) (try
+                                (load-string val)
+                                (catch RuntimeException e
+                                  "#ERROR"))
+            (is-commented-formula? val) (.substring val 1)
+            :else val))))
 
 (defn- set-displayed-value-at!
   [model row col val]
   (let [cur-val (grid/get-grid-value model row col)]
     (grid/set-grid-value! model row col (assoc cur-val :displayed-value val))))
 
+(defn- starts-with?
+  [val starting-str]
+  (let [trimmed-val (clojure.string/trim val)]
+    (.startsWith trimmed-val starting-str)))
+
 (defn- is-formula?
   [val]
-  (let [trimmed-val (clojure.string/trim val)]
-    (.startsWith trimmed-val "(")))
+  (starts-with? val "("))
+
+(defn- is-commented-formula?
+  [val]
+  (and (starts-with? val "'") (is-formula? (.substring val 1))))

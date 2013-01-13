@@ -24,6 +24,12 @@
 (deftest displayed-bad-formula
   (set-and-get "(+ 1" get-displayed-value-at "#ERROR"))
 
+(deftest displayed-commented-formula
+  (set-and-get "'(+ 1 2)" get-displayed-value-at "(+ 1 2)"))
+
+(deftest displayed-basic-value-with-leading-quote
+  (set-and-get "'foo'" get-displayed-value-at "'foo'"))
+
 (defn- set-and-get
   [entered-val getter expected-result]
   (let [model (create-model)]
