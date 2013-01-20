@@ -1,14 +1,17 @@
 (ns com.beyondtechnicallycorrect.transcend.ui
   (:require
-    [com.beyondtechnicallycorrect.transcend.table-model-adapter :as adapter]))
+    [com.beyondtechnicallycorrect.transcend.table-model-adapter :as adapter]
+    [com.beyondtechnicallycorrect.transcend.editing-cell
+      :refer [set-cell-being-edited! set-no-cell-being-edited!]]))
 
+(declare custom-table)
 (declare create-table-cell-renderer)
 
 (def ^:private first-col-width 50)
 
 (defn create-table
   []
-  (let [table (javax.swing.JTable. (adapter/create-table-model))
+  (let [table (custom-table)
         first-col (-> (.getColumnModel table) (.getColumn 0))]
     (doto first-col
       (.setMaxWidth first-col-width)
@@ -20,6 +23,25 @@
       (.setAutoResizeMode javax.swing.JTable/AUTO_RESIZE_OFF)
       (.setDefaultRenderer java.lang.Object (create-table-cell-renderer))
       (.setGridColor java.awt.Color/LIGHT_GRAY))))
+
+(defn- custom-table
+  []
+  (proxy [javax.swing.JTable] [(adapter/create-table-model)]
+    (editCellAt
+      ([row column]
+        (set-cell-being-edited! row column)
+        (proxy-super editCellAt row column))
+      ([row column e]
+        (set-cell-being-edited! row column)
+        (proxy-super editCellAt row column e)))
+    (editingCanceled
+      [e]
+      (set-no-cell-being-edited!)
+      (proxy-super editingCanceled e))
+    (editingStopped
+      [e]
+      (set-no-cell-being-edited!)
+      (proxy-super editingStopped e))))
 
 (defn- create-table-cell-renderer
   []

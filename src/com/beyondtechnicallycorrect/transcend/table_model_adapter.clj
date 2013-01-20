@@ -1,5 +1,7 @@
 (ns com.beyondtechnicallycorrect.transcend.table-model-adapter
-  (:require [com.beyondtechnicallycorrect.transcend.model :as model]))
+  (:require [com.beyondtechnicallycorrect.transcend.model :as model]
+            [com.beyondtechnicallycorrect.transcend.editing-cell
+              :refer [get-cell-being-edited]]))
 
 (defn create-table-model
   []
@@ -21,9 +23,13 @@
           (proxy-super getColumnName (dec column))))
       (getValueAt
         [row column]
-        (if (== 0 column)
-          (inc row)
-          (model/get-displayed-value-at model row (inc column))))
+        (let [is-editing? (= (get-cell-being-edited) [row column])
+              value-getter (if is-editing?
+                             model/get-user-entered-value-at
+                             model/get-displayed-value-at)]
+          (if (== 0 column)
+            (inc row)
+            (value-getter model row (inc column)))))
       (isCellEditable
         [row column]
         (not= column 0))
