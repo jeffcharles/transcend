@@ -1,5 +1,7 @@
 (ns com.beyondtechnicallycorrect.transcend.model
-  (:require [com.beyondtechnicallycorrect.transcend.grid :as grid]))
+  (:require [com.beyondtechnicallycorrect.transcend.grid :as grid]
+            [com.beyondtechnicallycorrect.transcend.default-eval-ns
+              :as default-eval-ns]))
 
 (declare set-displayed-value-at!)
 (declare is-formula?)
@@ -22,10 +24,7 @@
   (let [cur-val (grid/get-grid-value model row col)]
     (grid/set-grid-value! model row col (assoc cur-val :user-entered val))
     (set-displayed-value-at! model row col
-      (cond (is-formula? val) (try
-                                (load-string val)
-                                (catch RuntimeException e
-                                  "#ERROR"))
+      (cond (is-formula? val) (default-eval-ns/eval-transcend-fn val)
             (is-commented-formula? val) (.substring val 1)
             :else val))))
 
