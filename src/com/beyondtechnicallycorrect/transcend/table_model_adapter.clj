@@ -29,10 +29,10 @@
                              model/get-displayed-value-at)]
           (if (== 0 column)
             (inc row)
-            (value-getter model row (inc column)))))
+            (value-getter model row (dec column)))))
       (isCellEditable
         [row column]
         (not= column 0))
       (setValueAt
         [value row column]
-        (model/set-user-entered-value-at! model row (inc column) value)))))
+        (model/set-user-entered-value-at! model row (dec column) value)))))
