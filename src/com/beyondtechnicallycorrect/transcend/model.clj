@@ -1,5 +1,6 @@
 (ns com.beyondtechnicallycorrect.transcend.model
   (:require [com.beyondtechnicallycorrect.transcend.grid :as grid]
+            [com.beyondtechnicallycorrect.transcend.reader :as reader]
             [com.beyondtechnicallycorrect.transcend.default-eval-ns
               :as default-eval-ns]))
 
@@ -17,14 +18,14 @@
 
 (defn get-displayed-value-at
   [model row col]
-  (:displayed-value (grid/get-grid-value model row col)))
+  (reader/get-displayed-value-at model row col))
 
 (defn set-user-entered-value-at!
   [model row col val]
   (let [cur-val (grid/get-grid-value model row col)]
     (grid/set-grid-value! model row col (assoc cur-val :user-entered val))
     (set-displayed-value-at! model row col
-      (cond (is-formula? val) (default-eval-ns/eval-transcend-fn val)
+      (cond (is-formula? val) (default-eval-ns/eval-transcend-fn model val)
             (is-commented-formula? val) (.substring val 1)
             :else val))))
 
