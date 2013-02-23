@@ -4,6 +4,8 @@
               :refer [eval-transcend-fn get-grid-val get-col-num get-row-num]]
             [com.beyondtechnicallycorrect.transcend.model :as model]))
 
+(declare eval-given-a1-letternum-should-transform-to-get-grid-value)
+
 (deftest eval-valid-fn
   (is (= 5 (eval-transcend-fn nil "(+ 2 3)"))))
 
@@ -48,7 +50,14 @@
    (is (= 1 (get-row-num "2"))))
 
 (deftest eval-letternum-should-transform-to-get-grid-value
+  (eval-given-a1-letternum-should-transform-to-get-grid-value "(+ 1 (A1))"))
+
+(deftest eval-letternum-with-lowercase-letter-should-transform-to-get-grid-value
+  (eval-given-a1-letternum-should-transform-to-get-grid-value "(+ 1 (a1))"))
+
+(defn- eval-given-a1-letternum-should-transform-to-get-grid-value
+  [str-with-letternum]
   (let [grid (model/create-model)]
     (model/set-user-entered-value-at! grid 0 0 1)
-    (model/set-user-entered-value-at! grid 0 1 "(+ 1 (A1))")
+    (model/set-user-entered-value-at! grid 0 1 str-with-letternum)
     (is (= 2 (model/get-displayed-value-at grid 0 1)))))

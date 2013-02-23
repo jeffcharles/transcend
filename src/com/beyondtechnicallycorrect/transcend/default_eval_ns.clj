@@ -1,5 +1,6 @@
 (ns com.beyondtechnicallycorrect.transcend.default-eval-ns
-  (:require [com.beyondtechnicallycorrect.transcend.reader :as reader]))
+  (:require [com.beyondtechnicallycorrect.transcend.reader :as reader]
+            [clojure.string :as string]))
 
 (declare replace-cell-refs)
 
@@ -16,7 +17,7 @@
         letter-to-index #(- (int %) upper-a-ascii-val)
         num-letters-in-alphabet 26
         left-shift #(* num-letters-in-alphabet (inc %))]
-    (->> provided-col-descriptor
+    (->> (string/upper-case provided-col-descriptor)
       (map letter-to-index)
       (reduce #(+ (left-shift %) %2)))))
 
@@ -46,7 +47,8 @@
   [form]
   (if (= (count form) 1)
     (let [first-elem (first form)
-          cell-ref-matches (re-matches #"^([A-Z]+)([0-9]+)$" (name first-elem))
+          cell-ref-matches
+            (re-matches #"(?i)^([A-Z]+)([0-9]+)$" (name first-elem))
           is-cell-ref?
             (and (symbol? first-elem) cell-ref-matches)
           col-str (get cell-ref-matches 1)
