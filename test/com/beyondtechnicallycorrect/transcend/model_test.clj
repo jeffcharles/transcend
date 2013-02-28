@@ -9,11 +9,17 @@
 (deftest creation
   (is (not nil) create-model))
 
-(deftest entered-basic-value
+(deftest entered-basic-int-value
   (set-and-get "3" get-user-entered-value-at "3"))
 
-(deftest displayed-basic-value
-  (set-and-get "3" get-displayed-value-at "3"))
+(deftest displayed-basic-int-value-should-translate-to-int
+  (set-and-get "3" get-displayed-value-at 3))
+
+(deftest entered-basic-str-value
+  (set-and-get "a" get-user-entered-value-at "a"))
+
+(deftest displayed-basic-str-value-should-leave-as-string
+  (set-and-get "a" get-displayed-value-at "a"))
 
 (deftest entered-formula
   (set-and-get "(+ 1 2)" get-user-entered-value-at "(+ 1 2)"))

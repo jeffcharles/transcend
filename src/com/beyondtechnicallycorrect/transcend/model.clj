@@ -7,6 +7,7 @@
 (declare set-displayed-value-at!)
 (declare is-formula?)
 (declare is-commented-formula?)
+(declare translate-type)
 
 (defn create-model
   []
@@ -31,8 +32,10 @@
 
 (defn- set-displayed-value-at!
   [model row col val]
-  (let [cur-val (grid/get-grid-value model row col)]
-    (grid/set-grid-value! model row col (assoc cur-val :displayed-value val))))
+  (let [cur-val (grid/get-grid-value model row col)
+        new-val (translate-type val)]
+    (grid/set-grid-value! model row col
+       (assoc cur-val :displayed-value new-val))))
 
 (defn- starts-with?
   [val starting-str]
@@ -46,3 +49,12 @@
 (defn- is-commented-formula?
   [val]
   (and (starts-with? val "'") (is-formula? (.substring val 1))))
+
+(defn- translate-type
+  [val]
+  (if (string? val)
+    (let [is-number? (re-matches #"^-?[0-9]*\.?[0-9]+$" val)]
+      (if is-number?
+        (read-string val)
+        val))
+    val))

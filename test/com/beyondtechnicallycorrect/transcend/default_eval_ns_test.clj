@@ -24,7 +24,7 @@
 
 (deftest get-grid-value-inside-evaled-fn-should-return-value
   (let [grid (model/create-model)]
-    (model/set-user-entered-value-at! grid 1 2 5)
+    (model/set-user-entered-value-at! grid 1 2 "5")
     (model/set-user-entered-value-at! grid 2 1 "(get-grid-value 1 2)")
     (is (= 5 (model/get-displayed-value-at grid 2 1)))))
 
@@ -58,6 +58,6 @@
 (defn- eval-given-a1-letternum-should-transform-to-get-grid-value
   [str-with-letternum]
   (let [grid (model/create-model)]
-    (model/set-user-entered-value-at! grid 0 0 1)
+    (model/set-user-entered-value-at! grid 0 0 "1")
     (model/set-user-entered-value-at! grid 0 1 str-with-letternum)
     (is (= 2 (model/get-displayed-value-at grid 0 1)))))
