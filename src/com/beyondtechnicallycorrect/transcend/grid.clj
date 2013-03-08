@@ -18,6 +18,12 @@
       (nth (nth grid row) col)
       nil)))
 
+(defn get-grid-range
+  [grid [row1 col1] [row2 col2]]
+  (let [grid @grid]
+    (->> (subvec grid row1 (inc row2))
+      (map #(subvec % col1 (inc col2))))))
+
 (defn set-grid-value!
   [grid row col value]
   (swap! grid (fn [grid]
