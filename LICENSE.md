@@ -1,4 +1,4 @@
-Copyright (c) 2012, Jeffrey Charles
+Copyright (c) 2013, Jeffrey Charles
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
