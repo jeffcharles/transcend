@@ -1,7 +1,8 @@
 (ns com.beyondtechnicallycorrect.transcend.default-eval-ns-test
   (:require [clojure.test :refer [deftest is]]
-            [com.beyondtechnicallycorrect.transcend.default-eval-ns
-              :refer [eval-transcend-fn get-grid-val get-col-num get-row-num]]
+            [com.beyondtechnicallycorrect.transcend.default-eval-ns :refer
+              [eval-transcend-fn get-grid-val get-grid-range-for get-col-num
+               get-row-num]]
             [com.beyondtechnicallycorrect.transcend.model :as model]))
 
 (declare eval-given-a1-letternum-should-transform-to-get-grid-value)
@@ -27,6 +28,12 @@
     (model/set-user-entered-value-at! grid 1 2 "5")
     (model/set-user-entered-value-at! grid 2 1 "(get-grid-value 1 2)")
     (is (= 5 (model/get-displayed-value-at grid 2 1)))))
+
+(deftest get-grid-range-for-should-return-range
+  (let [grid (model/create-model)]
+    (model/set-user-entered-value-at! grid 0 0 "foo")
+    (model/set-user-entered-value-at! grid 0 1 "bar")
+    (is (= [["foo" "bar"]] (get-grid-range-for grid [0 0] [0 1])))))
 
 (deftest col-num-when-a-should-ret-0
    (is (= 0 (get-col-num "A"))))

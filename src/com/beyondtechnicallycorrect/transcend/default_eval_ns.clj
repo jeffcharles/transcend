@@ -8,6 +8,10 @@
   [grid row col]
   (reader/get-displayed-value-at grid row col))
 
+(defn get-grid-range-for
+  [grid [row1 col1] [row2 col2]]
+  (reader/get-displayed-range grid [row1 col1] [row2 col2]))
+
 (defn get-col-num
   "Takes a column descriptor (one or more English letters) from the grid
   displayed to the user and transforms it into the column number which the
@@ -28,13 +32,15 @@
   (dec (read-string provided-row-num)))
 
 (declare ^:dynamic get-grid-value) ; Want to bind this name in the eval context
+(declare ^:dynamic get-grid-range)
 (defn eval-transcend-fn
   [grid transcend-fn]
   (try
     (binding [*ns*
       (find-ns 'com.beyondtechnicallycorrect.transcend.default-eval-ns)
               ; Partially apply to get simple access to grid state
-              get-grid-value #(get-grid-val grid % %2)]
+              get-grid-value #(get-grid-val grid % %2)
+              get-grid-range #(get-grid-range-for grid % %2)]
         (-> (read-string transcend-fn)
           (replace-cell-refs)
           (eval)))
